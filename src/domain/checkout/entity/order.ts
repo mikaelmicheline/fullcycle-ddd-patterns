@@ -46,4 +46,20 @@ export default class Order {
   total(): number {
     return this._items.reduce((acc, item) => acc + item.total(), 0);
   }
+
+  addItem(item: OrderItem) {
+    this._items.push(item);
+    this.validate();
+  }
+
+  removeItem(itemId: string) {
+    const index = this._items.findIndex(item => item.id === itemId)
+
+    if (index === -1) {
+      throw new Error("Item not found")
+    }
+
+    this._items.splice(index, 1);
+    this.validate();
+  }
 }
